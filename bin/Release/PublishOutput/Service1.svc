@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="DivLogService1.dlSmarterToolsProvider" CodeBehind="Service1.svc.vb" %> 
+  
