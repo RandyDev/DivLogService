@@ -82,16 +82,16 @@ Public Class Service1
     End Function
 
     <WebMethod(Description:="Returns first and last name of Employees with birthday today", EnableSession:=False)>
-    Public Function GetBirthdays(ByVal locationID As String) As DataTable
-        Dim dt As DataTable = New DataTable
+    Public Function GetBirthdays(ByVal locationID As String) As DataSet
+        Dim ds As DataSet = New DataSet
         Dim dba As New DBAccess("divlogHR")
         dba.CommandText = "SELECT EmployeeFirstName, EmployeeLastName FROM Employees " &
             "WHERE DATEPART(d, EmployeeDOB) = DATEPART(d, GETDATE()) " &
             "AND DATEPART(m, EmployeeDOB) = DATEPART(m, GETDATE()) " &
             "AND LocaID = @locaID" ' @@@@@ Stored as string in 0/0/00 format 0/0/00
         dba.AddParameter("@locaID", locationID)
-        dt = dba.ExecuteDataSet.Tables(0)
-        Return dt
+        ds = dba.ExecuteDataSet
+        Return ds
     End Function
 
     <WebMethod(Description:="Returns single WorkOrder", EnableSession:=False)>
@@ -191,13 +191,13 @@ Public Class Service1
     End Function
 
     <WebMethod(Description:="Returns location specific Dock Monitor Banners", EnableSession:=False)>
-    Public Function getBanners(ByVal locationID As String) As DataTable
-        Dim dt As DataTable = New DataTable
+    Public Function getBanners(ByVal locationID As String) As DataSet
+        Dim ds As New DataSet
         Dim dba As New DBAccess
         dba.CommandText = "SELECT Banner From DockMonitorBanners WHERE Enabled=1 and LocationID=@locaID ORDER BY SortOrder"
         dba.AddParameter("@locaID", locationID)
-        dt = dba.ExecuteDataSet.Tables(0)
-        Return dt
+        ds = dba.ExecuteDataSet
+        Return ds
     End Function
 
     <WebMethod(Description:="Returns Dock Monitor load grids data", EnableSession:=False)>
